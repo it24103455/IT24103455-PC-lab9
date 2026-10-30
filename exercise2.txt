@@ -1,0 +1,16 @@
+SE3082 Lab 9 - Exercise 2: Simple calculation program (adding two numbers)
+Student: IT24103499   |   Runtime: Google Colab, Tesla T4 GPU
+
+==================================================================
+$ nvcc -arch=sm_75 ex2_add.cu -o ex2_add && ./ex2_add
+==================================================================
+Result is 9
+
+THINK - answers
+1. The GPU has its own memory, separate from the CPU's RAM. The kernel runs on the GPU and
+   can only use device addresses. a, b, c are in host memory, so we allocate d_a, d_b, d_c
+   with cudaMalloc and copy the data across with cudaMemcpy.
+2. cudaMemcpy runs on the host and needs the device destination (d_a) and the host source
+   address (&a). The kernel runs on the GPU, so it must receive device pointers (d_a).
+3. add<<<1, 1>>> runs ONE thread. For 10 threads, use add<<<1, 10>>>. The answer stays 9:
+   every thread computes the same *a + *b and writes it to the same *c.

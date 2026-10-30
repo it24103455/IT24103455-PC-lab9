@@ -1,0 +1,56 @@
+SE3082 Lab 9 - Exercise 1: Set up the CUDA environment in Google Colab
+Student: IT24103499   |   Runtime: Google Colab, Tesla T4 GPU
+
+==================================================================
+$ nvidia-smi
+==================================================================
+Sun Oct 11 19:07:28 2026
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 580.82.07              Driver Version: 580.82.07      CUDA Version: 13.0     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  Tesla T4                       Off |   00000000:00:04.0 Off |                    0 |
+| N/A   45C    P8             10W /   70W |       0MiB /  15360MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+
+==================================================================
+$ nvcc --version
+==================================================================
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2025 NVIDIA Corporation
+Built on Wed_Aug_20_01:58:59_PM_PDT_2025
+Cuda compilation tools, release 13.0, V13.0.88
+Build cuda_13.0.r13.0/compiler.36424714_0
+
+==================================================================
+$ nvidia-smi --query-gpu=name,compute_cap --format=csv
+==================================================================
+name, compute_cap
+Tesla T4, 7.5
+
+GPU: Tesla T4, compute capability 7.5  ->  compiler flag -arch=sm_75
+
+==================================================================
+$ nvcc -arch=sm_75 hello.cu -o hello && ./hello
+==================================================================
+Hello from GPU thread 0
+Hello from GPU thread 1
+Hello from GPU thread 2
+Hello from GPU thread 3
+
+Checklist:
+[x] nvidia-smi shows a GPU (Tesla T4, compute capability 7.5)
+[x] nvcc --version shows a CUDA release (13.0)
+[x] hello printed four lines
